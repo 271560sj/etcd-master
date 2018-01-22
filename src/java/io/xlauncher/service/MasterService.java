@@ -18,4 +18,10 @@ public interface MasterService {
      * @throws Exception
      */
     void watcherKWorkerService()throws Exception;
+
+    /**
+     * 删除Master service注册的信息
+     * @throws Exception
+     */
+    void deleteMasterService()throws Exception;
 }

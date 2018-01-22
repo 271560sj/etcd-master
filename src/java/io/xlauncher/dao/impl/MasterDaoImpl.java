@@ -58,4 +58,22 @@ public class MasterDaoImpl implements MasterDao {
             return entity;
         }
     }
+
+    //删除Master service的注册信息
+    public KeyEntity deleteMasterService(String url) throws Exception {
+
+        KeyEntity entity = new KeyEntity();
+        try {
+            HttpHeaders headers = new HttpHeaders();
+            HttpEntity httpEntity = new HttpEntity(null, headers);
+            ResponseEntity<KeyEntity> responseEntity = restTemplate.exchange(url,HttpMethod.DELETE,httpEntity,KeyEntity.class);
+            if (responseEntity.getStatusCodeValue() == 200){
+                entity = responseEntity.getBody();
+            }
+        }catch (Exception e){
+            log.error("MasterDaoImpl,deleteMasterService,delete master service error.",e);
+        }finally {
+            return entity;
+        }
+    }
 }

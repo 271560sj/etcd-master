@@ -26,6 +26,9 @@ public class MasterController {
         //注册Master service
         masterService.registryMasterService();
 
+        //删除Master service注册的信息
+        masterService.deleteMasterService();
+
         //监控worker service
         masterService.watcherKWorkerService();
     }

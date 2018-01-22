@@ -48,6 +48,21 @@ public class MasterServiceImpl implements MasterService{
         thread.start();
     }
 
+    public void deleteMasterService() throws Exception {
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append("http://").append(properties.getProperty("master.registry.etcd.ip") + ":" + properties.getProperty("master.registry.etcd.port"))
+                .append("/v2/keys/").append(properties.getProperty("master.registry.key"))
+                .append(Boolean.parseBoolean(properties.getProperty("master.registry.recursive")) == true
+                        && Boolean.parseBoolean(properties.getProperty("master.registry.dir")) == false
+                        ? "?recursive=" + Boolean.parseBoolean(properties.getProperty("master.registry.recursive"))
+                        : "?dir=" + Boolean.parseBoolean(properties.getProperty("master.registry.dir")));
+        String url = stringBuffer.toString();
+        DeleteMasterServiceThread deleteMasterServiceThread = new DeleteMasterServiceThread(url);
+        Thread thread = new Thread(deleteMasterServiceThread);
+        thread.start();
+
+    }
+
     //构造URL
     private String getUrls(){
         StringBuffer url = new StringBuffer();
@@ -151,6 +166,37 @@ public class MasterServiceImpl implements MasterService{
                 }
             }catch (Exception e){
                 log.error("WatcherKeys error",e);
+            }
+        }
+    }
+
+    //删除Master service的线程
+    class DeleteMasterServiceThread implements Runnable{
+
+        Log log = LogFactory.getLog(DeleteMasterServiceThread.class);
+
+        //请求的URL
+        private String url;
+
+        public DeleteMasterServiceThread(String url){
+            this.url = url;
+        }
+        //运行删除Master service的线程
+        public void run() {
+            try {
+                while (true){
+
+                    //删除Master service
+                    KeyEntity entity = masterDao.deleteMasterService(url);
+                    if (entity.getNode() != null){//判断是否删除成功,并输出删除成功的信息
+                        String service = entity.getNode().getValue();
+                        RegistryEntity registryEntity = JSONObject.parseObject(service,RegistryEntity.class);
+                        log.info("Delete," + JSONObject.toJSONString(registryEntity));
+                    }
+                    Thread.sleep(1000 * 60);
+                }
+            }catch (Exception e){
+                log.error("MasterServiceImpl,DeleteMasterServiceThread,delete master service error");
             }
         }
     }

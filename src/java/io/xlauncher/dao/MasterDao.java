@@ -24,4 +24,12 @@ public interface MasterDao {
      * @throws Exception
      */
     KeyEntity watcherNodeInfos(String url, Object[] parames)throws Exception;
+
+    /**
+     * 删除Master service的注册信息
+     * @param url
+     * @return
+     * @throws Exception
+     */
+    KeyEntity deleteMasterService(String url)throws Exception;
 }
