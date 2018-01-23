@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * controller,用于控制master的业务
@@ -31,5 +32,11 @@ public class MasterController {
 
         //监控worker service
         masterService.watcherKWorkerService();
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getIndex")
+    public ModelAndView getIndex()throws Exception{
+        return new ModelAndView("index");
     }
 }
