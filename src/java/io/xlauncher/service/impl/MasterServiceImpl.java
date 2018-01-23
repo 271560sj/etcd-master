@@ -95,6 +95,10 @@ public class MasterServiceImpl implements MasterService{
         return parames;
     }
 
+    private void printResult(String type, KeyEntity entity){
+        System.out.println(type + ":" + entity.getAciton() + "," + entity.getNode().getKey()
+        + entity.getNode().getValue());
+    }
     //注册Master service的线程
     class RegistryMasterServiceThread implements Runnable {
         //打印日志
@@ -113,19 +117,21 @@ public class MasterServiceImpl implements MasterService{
 
         //运行线程
         public void run() {
-            int i = 0;
+            //计数
+            int count = 0;
             while (true){
                 try {
 
                     //注册Master service的信息
                     KeyEntity entity = masterDao.setKNodeInfos(url,parames);
-
-                    log.info("Registry: " + JSONObject.toJSONString(entity));
-                    i ++;
-                    Thread.sleep(1000 * 60);
-                    if (i > 20){
+                    //打印注册信息返回结果
+                    printResult("Registry",entity);
+//                    log.info("Registry: " + JSONObject.toJSONString(entity));
+                    count ++;
+                    if (count > 20){
                         break;
                     }
+                    Thread.sleep(1000 * 60);
                 } catch (Exception e) {
                     log.error("SetKeysThread error",e);
                 }
@@ -156,12 +162,15 @@ public class MasterServiceImpl implements MasterService{
                 while (true){
                     //监控worker service的信息
                     KeyEntity entity = masterDao.watcherNodeInfos(url,parames);
-                    if (entity.getNode() != null){
-                        //获取worker service的信息
-                        String registry = entity.getNode().getValue();
-                        RegistryEntity registryEntity = JSONObject.parseObject(registry,RegistryEntity.class);
-                        log.info("Watcher: " + JSONObject.toJSONString(registryEntity));
-                    }
+
+                    //打印监控信息
+                    printResult("Watcher",entity);
+//                    if (entity.getNode() != null){
+//                        //获取worker service的信息
+//                        String registry = entity.getNode().getValue();
+//                        RegistryEntity registryEntity = JSONObject.parseObject(registry,RegistryEntity.class);
+//                        log.info("Watcher: " + JSONObject.toJSONString(registryEntity));
+//                    }
                     Thread.sleep(1000 * 60);
                 }
             }catch (Exception e){
@@ -178,20 +187,27 @@ public class MasterServiceImpl implements MasterService{
         //请求的URL
         private String url;
 
+
         public DeleteMasterServiceThread(String url){
             this.url = url;
         }
         //运行删除Master service的线程
         public void run() {
             try {
+                int count = 0;
                 while (true){
-
                     //删除Master service
                     KeyEntity entity = masterDao.deleteMasterService(url);
-                    if (entity.getNode() != null){//判断是否删除成功,并输出删除成功的信息
-                        String service = entity.getNode().getValue();
-                        RegistryEntity registryEntity = JSONObject.parseObject(service,RegistryEntity.class);
-                        log.info("Delete," + JSONObject.toJSONString(registryEntity));
+                    //打印删除的信息
+                    printResult("Delete",entity);
+//                    if (entity.getNode() != null){//判断是否删除成功,并输出删除成功的信息
+//                        String service = entity.getNode().getValue();
+//                        RegistryEntity registryEntity = JSONObject.parseObject(service,RegistryEntity.class);
+//                        log.info("Delete," + JSONObject.toJSONString(registryEntity));
+//                    }
+                    count ++;
+                    if (count > 20){
+                        break;
                     }
                     Thread.sleep(1000 * 60);
                 }
