@@ -1,7 +1,32 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<script type="text/javascript" src="../js/require.js" data-main="../js/main"></script>
 <body>
-     <div th:replace="index :: index"></div>
+    <div id="index">
+        <div>
+            <table>
+                <tbody>
+                    <tr>
+                        <th>Action</th>
+                        <th>Key</th>
+                        <th>Value</th>
+                        <th>TTL</th>
+                    </tr>
+                </tbody>
+                <tbody>
+                    <tr v-for="info in objData.nodes">
+                        <td>{{info.action}}</td>
+                        <td>{{info.node.key}}</td>
+                        <td>{{info.node.value}}</td>
+                        <td>{{info.node.ttl}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </body>
+<script type="text/javascript" src="../js/require.js"></script>
+<script type="text/javascript" src="../js/main.js"></script>
+<script>
+    require(["master"],function(master){});
+</script>
 </html>

@@ -40,7 +40,7 @@ public class MasterDaoImpl implements MasterDao {
     }
 
     //监控worker service的信息
-    public KeyEntity watcherNodeInfos(String url, Object[] parames) throws Exception {
+    public KeyEntity watcherNodeInfos(String url) throws Exception {
         KeyEntity entity = new KeyEntity();
 
         try {
@@ -48,7 +48,7 @@ public class MasterDaoImpl implements MasterDao {
             HttpHeaders headers = new HttpHeaders();
             HttpEntity httpEntity = new HttpEntity(null,headers);
             //请求etcd
-            ResponseEntity<KeyEntity> responseEntity = restTemplate.exchange(url, HttpMethod.GET, httpEntity, KeyEntity.class, parames);
+            ResponseEntity<KeyEntity> responseEntity = restTemplate.exchange(url, HttpMethod.GET, httpEntity, KeyEntity.class);
             if (responseEntity.getStatusCodeValue() == 200){
                 entity = responseEntity.getBody();
             }

@@ -14,7 +14,8 @@ import java.util.Properties;
 public class ReadPropertiesUtils {
 
     //记录配置文件的位置
-    private final static String propertiesPath = "/static/config/master-service.properties";
+    private final static String PROPERTIESPATH = "/static/config/master-service.properties";
+
     //打印日志
     private static Log log = LogFactory.getLog(ReadPropertiesUtils.class);
 
@@ -28,7 +29,7 @@ public class ReadPropertiesUtils {
         properties = new Properties();
         InputStream in = null;
         try {
-            in = ReadPropertiesUtils.class.getResourceAsStream(propertiesPath);
+            in = ReadPropertiesUtils.class.getResourceAsStream(PROPERTIESPATH);
             properties.load(in);
         }catch (Exception e){
             log.error("ReadPropertiesUtils,loadProperties,read properties file error");

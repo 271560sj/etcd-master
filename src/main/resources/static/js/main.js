@@ -1,8 +1,8 @@
 require.config({
-    baseUrl : "/",
-    path: {
-        "jquery": "js/lib/jquery/jquery-3.3.1",
-        "vue": "js/lib/vue/vue",
-        "master": "js/master/master",
+    baseUrl: "../js",
+    paths: {
+        "jquery": "lib/jquery/jquery-3.3.1",
+        "vue": "lib/vue/vue",
+        "master": "master/master",
     }
-})
+});

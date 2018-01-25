@@ -19,11 +19,10 @@ public interface MasterDao {
     /**
      * 监控key的变化
      * @param url
-     * @param parames
      * @return
      * @throws Exception
      */
-    KeyEntity watcherNodeInfos(String url, Object[] parames)throws Exception;
+    KeyEntity watcherNodeInfos(String url)throws Exception;
 
     /**
      * 删除Master service的注册信息

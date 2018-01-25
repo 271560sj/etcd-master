@@ -25,6 +25,4 @@ public class RegistryEntity {
      */
     @JsonProperty("serviceName")
     private String serviceName;
-
-
 }
