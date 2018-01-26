@@ -19,11 +19,11 @@ import java.util.Map;
 public class MasterServiceImpl implements MasterService{
 
     @Autowired
-    MasterDao masterDao;
+    private MasterDao masterDao;
 
     //读取配置文件
     @Autowired
-    ReadPropertiesUtils properties;
+    private ReadPropertiesUtils properties;
 
     //注册Master service的信息，通过线程进行，在后端运行（暂时没有实现线程与前端界面通信）
     public void registryMasterService() throws Exception {

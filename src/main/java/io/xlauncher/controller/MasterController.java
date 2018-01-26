@@ -17,7 +17,7 @@ public class MasterController {
 
     //获取MasterService实例
     @Autowired
-    MasterService masterService;
+    private MasterService masterService;
 
     /**
      * 启动Master service，该方式没有向前端返回信息

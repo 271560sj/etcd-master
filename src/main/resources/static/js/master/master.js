@@ -22,6 +22,7 @@ define([
                       ttl: 0,//生存时间
                       dir: false,//是否是目录
                   },
+                  doing: "",//客户端做的操作
               }
            }
          },
@@ -40,17 +41,20 @@ define([
                     url: _self.path.registryMasterInfosPath,
                     dataType: "json",
                     success: function(data){
-                        if(data != undefined){
-                           var nodes = _self.objData.nodeInfo;
-                           nodes.action = data.action;
-                           if (data.node != undefined){
-                               nodes.node.key = data.node.key;
-                               nodes.node.value = data.node.value;
-                               nodes.node.ttl = data.node.ttl;
-                               nodes.node.dir = data.node.dir;
-                           }
-                           _self.objData.nodes.push(nodes);
-                        }
+                        // if(data != undefined){
+                        //    var nodes = _self.objData.nodeInfo;
+                        //    if (data.errorCode == 0){
+                        //        nodes.action = data.action;
+                        //        if (data.node != undefined){
+                        //            nodes.node.key = data.node.key;
+                        //            nodes.node.value = data.node.value;
+                        //            nodes.node.ttl = data.node.ttl;
+                        //            nodes.node.dir = data.node.dir;
+                        //        }
+                        //        _self.objData.nodes.push(nodes);
+                        //    }
+                        // }
+                        _self.dealData(data,"Master");
                     },
                     error: function(data){
                     }
@@ -64,19 +68,20 @@ define([
                      type: "POST",
                      dataType: "json",
                      success: function (data) {
-                         if(data != undefined){
-                             var nodes = _self.objData.nodeInfo;
-                             nodes.action = data.action;
-                             if (data.node != undefined){
-                                 nodes.node.key = data.node.key;
-                                 if (data.node.value != undefined){
-                                     nodes.node.value = data.node.value;
-                                 }
-                                 nodes.node.ttl = data.node.ttl;
-                                 nodes.node.dir = data.node.dir;
-                             }
-                             _self.objData.nodes.push(nodes);
-                         }
+                         // if(data != undefined){
+                         //     var nodes = _self.objData.nodeInfo;
+                         //     nodes.action = data.action;
+                         //     if (data.node != undefined){
+                         //         nodes.node.key = data.node.key;
+                         //         if (data.node.value != undefined){
+                         //             nodes.node.value = data.node.value;
+                         //         }
+                         //         nodes.node.ttl = data.node.ttl;
+                         //         nodes.node.dir = data.node.dir;
+                         //     }
+                         //     _self.objData.nodes.push(nodes);
+                         // }
+                         _self.dealData(data,"Master");
                      },
                      error: function (data) {
                          
@@ -90,24 +95,41 @@ define([
                      type: "POST",
                      dataType: "json",
                      success: function (data) {
-                         if(data != undefined){
-                             var nodes = _self.objData.nodeInfo;
-                             nodes.action = data.action;
-                             if (data.node != undefined){
-                                 nodes.node.key = data.node.key;
-                                 if (data.node.value != undefined){
-                                     nodes.node.value = data.node.value;
-                                 }
-                                 nodes.node.ttl = data.node.ttl;
-                                 nodes.node.dir = data.node.dir;
-                             }
-                             _self.objData.nodes.push(nodes);
-                         }
+                         // if(data != undefined){
+                         //     var nodes = _self.objData.nodeInfo;
+                         //     nodes.action = data.action;
+                         //     if (data.node != undefined){
+                         //         nodes.node.key = data.node.key;
+                         //         if (data.node.value != undefined){
+                         //             nodes.node.value = data.node.value;
+                         //         }
+                         //         nodes.node.ttl = data.node.ttl;
+                         //         nodes.node.dir = data.node.dir;
+                         //     }
+                         //     _self.objData.nodes.push(nodes);
+                         // }
+                         _self.dealData(data,"Worker");
                      },
                      error: function (data) {
 
                      }
                  })
+             },
+             dealData:function (data,donig) {
+                 var _self = this;
+                 if(data != undefined){
+                     var nodes = _self.objData.nodeInfo;
+                     if (data.errorCode == 0){
+                         nodes.action = donig + " " +data.action;
+                         if (data.node != undefined){
+                             nodes.node.key = data.node.key;
+                             nodes.node.value = data.node.value;
+                             nodes.node.ttl = data.node.ttl;
+                             nodes.node.dir = data.node.dir;
+                         }
+                         _self.objData.nodes.push(nodes);
+                     }
+                 }
              }
 
          }

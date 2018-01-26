@@ -28,4 +28,29 @@ public class KeyEntity {
      */
     @JsonProperty("prevNode")
     private KNodeInfos prevNode;
+
+    /**
+     * 错误代码
+     */
+    @JsonProperty("errorCode")
+    private int errorCode;
+
+    /**
+     * 错误信息
+     */
+    @JsonProperty("message")
+    private String message;
+
+    /**
+     * 导致错误的原因
+     */
+    @JsonProperty("cause")
+    private String cause;
+
+    /**
+     * 返回错误的请求Index
+     */
+    @JsonProperty("index")
+    private int index;
+
 }
