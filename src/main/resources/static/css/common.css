@@ -1,0 +1,16 @@
+body {
+    background-color: lightgrey;
+    text-align: center;
+}
+table {
+    background-color: beige;
+    width: 100%;
+}
+.divCss {
+    text-align: center;
+    width: 100%;
+}
+.divCss .divOne {
+    margin-left: 20%;
+    margin-right: 20%;
+}

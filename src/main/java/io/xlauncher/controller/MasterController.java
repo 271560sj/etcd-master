@@ -2,6 +2,7 @@ package io.xlauncher.controller;
 
 import io.xlauncher.entity.KeyEntity;
 import io.xlauncher.service.MasterService;
+import io.xlauncher.utils.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,15 +27,19 @@ public class MasterController {
      */
     @ResponseBody
     @RequestMapping(value = "/masterService")
-    public void masterService()throws Exception{
-        //注册Master service
-        masterService.registryMasterService();
+    public void masterService() throws ExceptionUtils {
+        try {
+            //注册Master service
+            masterService.registryMasterService();
 
-        //删除Master service注册的信息
-        masterService.deleteMasterService();
+            //删除Master service注册的信息
+            masterService.deleteMasterService();
 
-        //监控worker service
-        masterService.watcherKWorkerService();
+            //监控worker service
+            masterService.watcherKWorkerService();
+        }catch (Exception e){
+            throw new ExceptionUtils(e);
+        }
     }
 
     /**
@@ -44,9 +49,13 @@ public class MasterController {
      */
     @ResponseBody
     @RequestMapping(value = "/registerService")
-    public KeyEntity registryMasterService()throws Exception{
-        KeyEntity entity = masterService.registryMasterServices();
-        return entity;
+    public KeyEntity registryMasterService()throws ExceptionUtils{
+        try {
+            KeyEntity entity = masterService.registryMasterServices();
+            return entity;
+        }catch (Exception e){
+            throw new ExceptionUtils(e);
+        }
     }
 
     /**
@@ -56,9 +65,13 @@ public class MasterController {
      */
     @ResponseBody
     @RequestMapping(value = "/deleteService")
-    public KeyEntity deleteMasterService()throws Exception{
-        KeyEntity entity = masterService.deleteMasterServices();
-        return entity;
+    public KeyEntity deleteMasterService()throws ExceptionUtils{
+        try {
+            KeyEntity entity = masterService.deleteMasterServices();
+            return entity;
+        }catch (Exception e){
+            throw new ExceptionUtils(e);
+        }
     }
 
     /**
@@ -68,9 +81,13 @@ public class MasterController {
      */
     @ResponseBody
     @RequestMapping(value = "/watcherService")
-    public KeyEntity watcherMasterService()throws Exception{
-        KeyEntity entity = masterService.watcherKWorkerServices();
-        return entity;
+    public KeyEntity watcherMasterService()throws ExceptionUtils{
+        try {
+            KeyEntity entity = masterService.watcherKWorkerServices();
+            return entity;
+        }catch (Exception e){
+            throw new ExceptionUtils(e);
+        }
     }
 
     /**
@@ -80,7 +97,11 @@ public class MasterController {
      */
     @ResponseBody
     @RequestMapping(value = "/getIndex")
-    public ModelAndView getIndex()throws Exception{
-        return new ModelAndView("index");
+    public ModelAndView getIndex()throws ExceptionUtils{
+        try {
+            return new ModelAndView("index");
+        }catch (Exception e){
+            throw new ExceptionUtils(e);
+        }
     }
 }
